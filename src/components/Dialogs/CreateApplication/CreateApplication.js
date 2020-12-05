@@ -6,7 +6,6 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import FileUploader from '../../Forms/FileUpload/FileUploader';
 
 
 function CreateApplication({
@@ -15,17 +14,20 @@ function CreateApplication({
 
     const [applicationHook, setHook ] = useState(""); 
     const [artistName, setName] = useState("");
-    const [media, setMedia] = useState("");
     const {venueName, eventDateTime} = event;
 
+    const resetApplication = () => {
+        setHook("");
+        setName("");
+    }
 
     const handleSubmit = () => {
         const newApplication = {
             artistName,
-            applicationHook,
-            media
+            applicationHook
         };
         onSubmit(newApplication);
+        resetApplication();
     };
 
     return(
@@ -47,8 +49,8 @@ function CreateApplication({
                 <TextField
                     required
                     fullWidth
-                    label="Artist"
-                    defaultValue={artistName}
+                    label="Artist Name"
+                    value={artistName}
                     onChange={(e) => setName(e.target.value)}
                     variant="outlined"
                 />
@@ -58,24 +60,13 @@ function CreateApplication({
                     required
                     fullWidth
                     multiline
-                    rows="4"
-                    label="Application Hook"
-                    defaultValue={applicationHook}
+                    rows="6"
+                    label="Why should you be picked for the event"
+                    value={applicationHook}
                     onChange={(e) => setHook(e.target.value)}
                     variant="outlined"
-                    inputProps={{ maxLength: 100}}
-                />
-                </Grid>
-                <Grid item xs={12}>
-                <FileUploader
-                    id="media"
-                    data-cy="media"
-                    name="media"
-                    label={"media"}
-                    value={media}
-                    handleChange={(e) => setMedia(e.target.value)}
-                    multiple={false}
-                    accept="mp3/*"
+                    inputProps={{ maxLength: 300}}
+                    helperText={`${applicationHook.length}/${300}`}
                 />
                 </Grid>
             </Grid>

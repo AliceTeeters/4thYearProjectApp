@@ -28,7 +28,7 @@ function CreateEvent({
     const [isDateSelectorOpen, setDateSelectorOpen] = useState(false);
 
     const resetEvent = () => {
-        setEventDateTime("");
+        setEventDateTime(moment(startDate).format());
         setEventDescription("");
         setVenueName("");
         setVenueLocation("");
@@ -85,7 +85,7 @@ function CreateEvent({
                     required
                     fullWidth
                     label="Venue"
-                    defaultValue={venueName}
+                    value={venueName}
                     onChange={(e) => setVenueName(e.target.value)}
                     variant="outlined"
                 />
@@ -95,7 +95,7 @@ function CreateEvent({
                     required
                     fullWidth
                     label="Location"
-                    defaultValue={venueLocation}
+                    value={venueLocation}
                     onChange={(e) => setVenueLocation(e.target.value)}
                     variant="outlined"
                 />
@@ -125,7 +125,7 @@ function CreateEvent({
                     multiline
                     rows="4"
                     label="Description"
-                    defaultValue={eventDescription}
+                    value={eventDescription}
                     onChange={(e) => setEventDescription(e.target.value)}
                     variant="outlined"
                     inputProps={{ maxLength: 100}}
