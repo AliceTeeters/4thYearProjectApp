@@ -14,7 +14,7 @@ function CreateApplication({
 
     const [applicationHook, setHook ] = useState(""); 
     const [artistName, setName] = useState("");
-    const {venueName, eventDateTime} = event;
+    const {eventId, venueName, eventDateTime} = event;
 
     const resetApplication = () => {
         setHook("");
@@ -26,7 +26,7 @@ function CreateApplication({
             artistName,
             applicationHook
         };
-        onSubmit(newApplication);
+        onSubmit(newApplication, eventId);
         resetApplication();
     };
 

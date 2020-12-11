@@ -30,6 +30,17 @@ function Event({event, createApplication, acceptApplication, applications}){
 
     const closeForm = () => setOpenApplication(false);
 
+    const renderButtons = (event) => {
+        if(!event.artistName){
+            return(
+                <React.Fragment>
+                    <Button onClick={openApplyForm}>Apply</Button>
+                    <Button onClick={openManageDialog}>Manage Applications</Button>
+                </React.Fragment>
+            )
+        }
+    }
+
     const openManageDialog = () => setOpenManage(true);
 
     const closeManage = () => setOpenManage(false);
@@ -45,13 +56,12 @@ function Event({event, createApplication, acceptApplication, applications}){
             <CardContent>
                 <Typography className={classes.title}>Venue: {venueName}</Typography>
                 <Typography className={classes.title}>Location: {venueLocation}</Typography>
+                {eventDescription ? <Typography component="p">Description: <br/>{eventDescription}</Typography> : <Typography className={classes.title}>Artist: {event.artistName}</Typography>}
                 <Typography className={classes.pos}>Date & Time: {eventDateTime}</Typography>
-                <Typography component="p">{eventDescription}</Typography>
             </CardContent>
             <CardActions>
-                <Button onClick={openApplyForm}>Apply</Button>
-                <Button onClick={openManageDialog}>Manage Applications</Button>
-            </CardActions>
+                {renderButtons(event)}
+                </CardActions>
             </CardActionArea>
         </Card>
 
@@ -65,7 +75,6 @@ function Event({event, createApplication, acceptApplication, applications}){
         open={openManage}
         handleClose={closeManage}
         event={event}
-        applications={applications}
         acceptApplication={acceptApplication}/>
         </React.Fragment>
 )

@@ -27,7 +27,8 @@
     "react-dropzone": "^11.2.4",
     "react-file-uploader": "^1.0.0",
     "react-helmet": "^6.1.0",
-    "storybook": "^6.1.6"
+    "storybook": "^6.1.6",
+    "use-async-effect": "^2.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

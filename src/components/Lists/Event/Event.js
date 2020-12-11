@@ -3,30 +3,33 @@ import { Grid } from '@material-ui/core';
 import Event from '../../Cards/Event/Event';
 
 
-  function EventList({events, createApplication, acceptApplication, applications}){
+  function EventList({events, createApplication, acceptApplication}){
 
-
-    const renderEventCard = (event) => {
+    const renderEventCard = (events) => {
+      console.log('events', events);
+      if(events !== []){
         return (
-          <Event
-            event={event}
-            createApplication={createApplication}
-            applications={applications}
-            acceptApplication={acceptApplication}
-          />
-        );
-      };
-
-    return(
-        <Grid container spacing={1}>
+          <Grid container spacing={1}>
         {events.map(event => {
             return (
                 <Grid item xs={4}>
-                  {renderEventCard(event)}
+                <Event
+                event={event}
+                createApplication={createApplication}
+                acceptApplication={acceptApplication}
+              />
                 </Grid>
               )
-    })}
+      })}
     </Grid>
+        );
+    }
+      };
+
+    return(
+      <React.Fragment>
+      {renderEventCard(events)}
+      </React.Fragment>
     );
   };
 

@@ -25,10 +25,16 @@ const useStyles = makeStyles({
   });
 
 function EventDialog({
-    open, handleClose, event, applications, isFullScreen, acceptApplication
+    open, handleClose, event, isFullScreen, acceptApplication
 }){
 
     const classes = useStyles();  
+
+    const {applications} = event;
+
+    const handleAccept = (application) => {
+        acceptApplication(event, application);
+    }
 
     return(
         <Dialog
@@ -41,7 +47,7 @@ function EventDialog({
             <DialogContent>
             <ApplicationList 
             applications={applications}
-            acceptApplication={acceptApplication}
+            acceptApplication={handleAccept}
             />
             </DialogContent>
             <DialogActions>

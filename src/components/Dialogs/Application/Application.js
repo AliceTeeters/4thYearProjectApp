@@ -59,7 +59,7 @@ function ApplicationDialog({
             </DialogContent>
             <DialogActions>
                 <Button className={classes.button} variant="contained">Message</Button>
-                <Button className={classes.button} variant="contained" onClick={acceptApplication}>Accept</Button>
+                <Button className={classes.button} variant="contained" onClick={acceptApplication(application)}>Accept</Button>
                 <Button onClick={handleClose}>Cancel</Button>
             </DialogActions>
         </Dialog>
