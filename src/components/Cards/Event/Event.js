@@ -7,12 +7,14 @@ import EventDialog from '../../Dialogs/Event/Event';
 const useStyles = makeStyles({
     root: {
         maxWidth: 450,
+        marginBottom: 75,
+        marginLeft: 75,
     },
     title: {
       fontSize: 14,
     },
     pos: {
-      marginBottom: 12,
+      marginBottom: 0,
     },
     media: {
         height: 170,
