@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
 import { GridList, GridListTile } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -22,7 +23,7 @@ const useStyles = makeStyles(theme => ({
       },
   }));
 
-function ApplicationList({applications, acceptApplication}){
+function ApplicationList({applications, acceptApplication, user}){
 
     const classes = useStyles();
 
@@ -31,6 +32,7 @@ function ApplicationList({applications, acceptApplication}){
           <Application
             application={application}
             acceptApplication={acceptApplication}
+            user={user}
           />
         );
       };
@@ -51,6 +53,6 @@ function ApplicationList({applications, acceptApplication}){
         }
         </GridList>
     )
-};
+}
 
 export default ApplicationList;

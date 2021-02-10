@@ -1,5 +1,5 @@
 import { getApplications, createApplication } from '../api/Applications';
-import { updateEventState } from './Events';
+//import { updateEventState } from './Events';
 
 
     export async function fetchApplications(){

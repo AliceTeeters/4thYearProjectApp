@@ -3,10 +3,11 @@ import { Grid } from '@material-ui/core';
 import Event from '../../Cards/Event/Event';
 
 
-  function EventList({events, createApplication, acceptApplication}){
+  function EventList({events, createApplication, acceptApplication, user}){
 
     const renderEventCard = (events) => {
       console.log('events', events);
+      console.log('user', user);
       if(events !== []){
         return (
           <Grid container spacing={1}>
@@ -17,6 +18,7 @@ import Event from '../../Cards/Event/Event';
                 event={event}
                 createApplication={createApplication}
                 acceptApplication={acceptApplication}
+                user={user}
               />
                 </Grid>
               )

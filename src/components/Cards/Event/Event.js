@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button} from '@material-ui/core';
@@ -21,7 +22,7 @@ const useStyles = makeStyles({
       },
   });
 
-function Event({event, createApplication, acceptApplication, applications}){
+function Event({event, createApplication, acceptApplication, user}){
 
     const classes = useStyles();
     const { venueName, eventDateTime, eventDescription, venueLocation, eventImage} = event;
@@ -36,8 +37,8 @@ function Event({event, createApplication, acceptApplication, applications}){
         if(!event.artistName){
             return(
                 <React.Fragment>
-                    <Button onClick={openApplyForm}>Apply</Button>
-                    <Button onClick={openManageDialog}>Manage Applications</Button>
+                    {user.attributes['custom:user_type'] === 'artist' ? <Button onClick={openApplyForm}>Apply</Button> : null}
+                    {user.attributes['custom:user_type'] === 'venue' ? <Button onClick={openManageDialog}>Manage Applications</Button> : null}
                 </React.Fragment>
             )
         }
@@ -72,12 +73,14 @@ function Event({event, createApplication, acceptApplication, applications}){
         event={event}
         onSubmit={createApplication}
         handleClose={closeForm}
+        user={user}
         />
         <EventDialog
         open={openManage}
         handleClose={closeManage}
         event={event}
-        acceptApplication={acceptApplication}/>
+        acceptApplication={acceptApplication}
+        user={user}/>
         </React.Fragment>
 )
 }

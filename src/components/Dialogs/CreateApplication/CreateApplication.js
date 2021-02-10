@@ -1,3 +1,4 @@
+/* eslint react/prop-types: 0 */
 import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -9,21 +10,20 @@ import Grid from '@material-ui/core/Grid';
 
 
 function CreateApplication({
-    open, handleClose, onSubmit, isFullScreen, event
+    open, handleClose, onSubmit, isFullScreen, event, user
 }){
 
     const [applicationHook, setHook ] = useState(""); 
-    const [artistName, setName] = useState("");
     const {eventId, venueName, eventDateTime} = event;
+    const {name} = user.attributes;
 
     const resetApplication = () => {
         setHook("");
-        setName("");
     }
 
     const handleSubmit = () => {
         const newApplication = {
-            artistName,
+            artistName: name,
             applicationHook
         };
         onSubmit(newApplication, eventId);
@@ -49,16 +49,6 @@ function CreateApplication({
                 <TextField
                     required
                     fullWidth
-                    label="Artist Name"
-                    value={artistName}
-                    onChange={(e) => setName(e.target.value)}
-                    variant="outlined"
-                />
-                </Grid>
-                <Grid item xs={12}>
-                <TextField
-                    required
-                    fullWidth
                     multiline
                     rows="6"
                     label="Why should you be picked for the event"
@@ -80,7 +70,6 @@ function CreateApplication({
 }
 
 CreateApplication.defaultProps = {
-    artistName: "",
     applicationHook: "",
     media: ""
 }

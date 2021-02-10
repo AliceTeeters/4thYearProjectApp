@@ -1,11 +1,12 @@
+/* eslint react/prop-types: 0 */
 import React, { useState, useEffect } from 'react';
-import EventsList from '../Lists/Event/Event';
-import CreateEvent from '../Dialogs/CreateEvent/CreateEvent';
-import { createNewEvent, createAcceptedEvent, fetchEvents, updateEventState } from '../../functions/Events';
-import { createNewApplication } from '../../functions/Applications';
+import EventsList from '../../Lists/Event/Event';
+import CreateEvent from '../../Dialogs/CreateEvent/CreateEvent';
+import { createNewEvent, createAcceptedEvent, fetchEvents, updateEventState } from '../../../functions/Events';
+import { createNewApplication } from '../../../functions/Applications';
 import { Grid, Button } from '@material-ui/core';
 
-function ViewEvents() {
+function ViewEvents({user}) {
 
     const [open, setOpen] = useState(false);
     const [events, setEvents] = useState([]);
@@ -44,7 +45,7 @@ function ViewEvents() {
     const handleAcceptApplication = async (event, application) => {
         try {
             await createAcceptedEvent(event, application).then(res => {
-                const updatedEvents = events.filter((e) => e.eventId != event.eventId);
+                const updatedEvents = events.filter((e) => e.eventId !== event.eventId);
                 updatedEvents.push(res);
                 setEvents(updatedEvents);
             });
@@ -59,14 +60,17 @@ function ViewEvents() {
     return(
         <React.Fragment>
             <Grid>
+            {user.attributes['custom:user_type'] === 'venue' ? (
                 <Grid item xs={12}>
-                    <Button variant="outline" onClick={openCreate}>Create New Event</Button>
-                </Grid>
+                <Button variant="outline" onClick={openCreate}>Create New Event</Button>
+            </Grid>
+            ) : null}  
             <Grid item xs={12}>
             <EventsList
             events={events}
             createApplication={handleCreateApplication}
             acceptApplication={handleAcceptApplication}
+            user={user}
             />
             </Grid>
             </Grid>
@@ -74,6 +78,7 @@ function ViewEvents() {
             open={open}
             handleClose={closeCreate}
             onSubmit={handleCreateEvent}
+            user={user}
             />
         </React.Fragment>
     );

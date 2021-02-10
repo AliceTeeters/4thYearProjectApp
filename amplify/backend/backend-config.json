@@ -1,1 +1,10 @@
-{}
+{
+  "auth": {
+    "seobooker8d3b141e": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

@@ -2,10 +2,11 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
-import Login from './Login';
+import CustomAuthenticator from './CustomAuthenticator';
 
-storiesOf('Cards/Login', module)
+storiesOf('View/Auth', module)
     .addDecorator(withKnobs)
     .add('Default', () => (
-        <Login/>
+        <CustomAuthenticator/>
     ));
+

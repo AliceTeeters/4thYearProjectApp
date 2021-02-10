@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, Avatar, CardActionArea, Typography, Button, Grid, Hidden} from '@material-ui/core';
+import { Card, Avatar, CardActionArea, Typography, Grid} from '@material-ui/core';
 
 import ApplicationDialog from '../../Dialogs/Application/Application'
 
