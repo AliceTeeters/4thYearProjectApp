@@ -13,7 +13,7 @@ import Event from '../../Cards/Event/Event';
           <Grid container spacing={1}>
         {events.map(event => {
             return (
-                <Grid item xs={4}>
+                <Grid item xs={12} lg={4}>
                 <Event
                 event={event}
                 createApplication={createApplication}

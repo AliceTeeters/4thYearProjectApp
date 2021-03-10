@@ -11,13 +11,15 @@ import { getApplications, createApplication } from '../api/Applications';
         }
     }
 
-    export async function createNewApplication(application, eventId){
-        const { artistName, applicationHook } = application;
+    export async function createNewApplication(application, eventId, artistId){
+        const { artistName, applicationHook, artistImage } = application;
         try {
             const newApplication = {
                 eventId,
                 artistName,
-                applicationHook
+                artistImage,
+                applicationHook,
+                artistId
             };
             const response = await createApplication(newApplication)
             if (response.errorMessage) {

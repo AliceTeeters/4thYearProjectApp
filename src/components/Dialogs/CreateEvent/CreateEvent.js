@@ -46,6 +46,7 @@ function CreateEvent({
         };
         onSubmit(newEvent);
         resetEvent();
+        handleClose();
     };
 
     const handleDateChange = (date) => {

@@ -56,7 +56,10 @@ export const props = {
             alert(JSON.stringify(values, null, 2));
         }, 400);
     },
-    acceptApplication: () => { }  
+    acceptApplication: () => { },
+    user: {
+        attributes: {'custom:user_type' : 'venue'}
+    }
 };
 
 storiesOf('Lists/EventList', module)

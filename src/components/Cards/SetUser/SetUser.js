@@ -1,30 +1,49 @@
 import React, {useState} from 'react';
 //import { makeStyles } from '@material-ui/core/styles';
+import FileUploader from '../../utils/FileUpload/FileUploader';
 import { Card, Grid, Button, FormControl, FormControlLabel, FormLabel, RadioGroup, Radio, TextField} from '@material-ui/core';
+import defaultImage from '../../../images/band.jpg';
 
 function SetUser({handleSetUserType}){
 
     const [name, setName] = useState();
     const [userType, setUserType] = useState();
     const [address, setAddress] = useState();
+    const [picture, setPicture] = useState();
 
-    const submitUserAttributes = () => {
-        let attributes = {};
-        if(userType === "venue"){
-            attributes = {
-                'name' : name,
-                'custom:user_type' : userType, 
-                'address': address,
+  const handleImageSelection = (image) => {
+    setPicture(image);
+  };
+
+    const submitUserAttributes = async () => {
+        if(picture){
+            let attributes = {};
+            if(userType === "venue"){
+                attributes = {
+                    'name' : name,
+                    'custom:user_type' : userType,
+                    'address': address,
+                }
             }
+            else if(userType === "artist"){
+                attributes = {
+                    'name' : name,
+                    'custom:user_type' : userType, 
+                    'custom:user_image' : defaultImage,
+                }
+            }
+            else{
+                attributes = {
+                    'name' : name,
+                    'custom:user_type' : userType, 
+                }
+            }
+            console.log(attributes);
+            handleSetUserType(attributes, picture.target.value);
         }
         else{
-            attributes = {
-                'name' : name,
-                'custom:user_type' : userType, 
-            }
+           alert("Please fill out all fields and upload a user image");
         }
-        console.log(attributes);
-        handleSetUserType(attributes);
     }
 
     const handleChange = (event) => {
@@ -72,6 +91,18 @@ function SetUser({handleSetUserType}){
                 />
                 </Grid>
                 }
+                <Grid item xs={12}>
+                <FileUploader
+                    id="picture"
+                    data-cy="picture"
+                    name="picture"
+                    label="user picture"
+                    value={picture}
+                    handleChange={handleImageSelection}
+                    multiple={false}
+                    accept="image/*"
+                />
+                </Grid>
             </Grid>
             <Button onClick={submitUserAttributes}>Submit</Button>
         </Card>

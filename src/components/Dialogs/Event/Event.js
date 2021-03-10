@@ -26,34 +26,30 @@ import ApplicationList from '../../Lists/Application/Application';
 //   });
 
 function EventDialog({
-    open, handleClose, event, isFullScreen, acceptApplication, user
+    open, handleClose, event, acceptApplication, user
 }){
 
     //const classes = useStyles();  
 
-    const {applications} = event;
-
     const handleAccept = (application) => {
         acceptApplication(event, application);
+        handleClose();
     }
 
     return(
         <Dialog
-        isFullScreen={isFullScreen || false}
+        fullScreen
         fullWidth={true}
         open={open}
         onClose={handleClose}
         >
-            <DialogTitle></DialogTitle>
-            <DialogContent>
             <ApplicationList 
-            applications={applications}
+            applications={event.applications}
             acceptApplication={handleAccept}
             user={user}
             />
-            </DialogContent>
             <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
+            <Button variant="contained" color="secondary" onClick={handleClose}>Cancel</Button>
             </DialogActions>
         </Dialog>
     );

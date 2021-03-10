@@ -1,21 +1,23 @@
 import React, {useState} from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, Avatar, CardActionArea, Typography, Grid} from '@material-ui/core';
-
+import { Card, CardMedia, CardActionArea, Typography, Grid} from '@material-ui/core';
+import defaultImage from '../../../images/band.jpg';
 import ApplicationDialog from '../../Dialogs/Application/Application'
 
 const useStyles = makeStyles({
     root: {
-        maxWidth: 500,
-        maxHeight: 150,
-        padding: 10,
+        maxWidth: 450,
+        maxHeight: 600,
+        marginBottom: 75,
+        marginLeft: 75,
     },
     title: {
       fontSize: 20,
       margin: 5,
     },
     media: {
-        height: 50,
+        height: 100,
       },
   });
 
@@ -23,7 +25,6 @@ function Application({application, acceptApplication}){
 
     const classes = useStyles();
     const [open, setOpen] = useState(false)
-    const {artistName, applicationHook, applicationImg} = application;
 
     const Open = () => { setOpen(true);}
     const Close = () => { setOpen(false);}
@@ -31,20 +32,16 @@ function Application({application, acceptApplication}){
     return(
         <React.Fragment>
         <Card className={classes.root} variant="outlined">
+            <CardMedia
+                className={classes.media}
+                component="img"
+                image={application.artistImage}
+                title="application"
+                />
             <CardActionArea onClick={Open}>
                 <Grid container spacing={1}>
-                    <Grid item xs={3}>
-                <Avatar
-                className={classes.media}
-                src={applicationImg ? applicationImg : "https://www.hopkinsmedicine.org/-/media/feature/noimageavailable.ashx"}
-                title="venue"
-                />
-                </Grid>
-                <Grid item xs={3}>
-                <Typography className={classes.title}>{artistName}</Typography>
-                </Grid>
-                <Grid item xs={6}>
-                <Typography component="p">{applicationHook}</Typography>
+                <Grid item xs={12}>
+                <Typography className={classes.title}>{application.artistName}</Typography>
                 </Grid>
                 </Grid>
             </CardActionArea>
@@ -57,5 +54,10 @@ function Application({application, acceptApplication}){
         </React.Fragment>
 )
 }
+
+Application.propTypes = {
+    application: PropTypes.object,
+    acceptApplication: PropTypes.func
+  };
 
 export default Application;

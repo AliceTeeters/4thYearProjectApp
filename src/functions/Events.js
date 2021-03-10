@@ -1,4 +1,4 @@
-import { getEvents, createEvent, deleteEvent } from '../api/Events';
+import { getEvents, createEvent, updateEvent, deleteEvent } from '../api/Events';
 import { fetchApplications } from './Applications';
 
     const formatEvents = async (e) => {
@@ -55,19 +55,20 @@ import { fetchApplications } from './Applications';
     };
 
     export async function createAcceptedEvent(event, application){
-        const { eventId, venueName, venueLocation, eventDateTime, sortDate } = event;
+        const {eventDateTime, eventDescription, sortDate, venueName, venueLocation} = event;
         const { artistName } = application;
         try{
             const acceptedEvent = {
-                venueName,
+                eventDateTime, 
+                eventDescription, 
+                sortDate, 
+                venueName, 
                 venueLocation,
-                eventDateTime,
-                sortDate,
                 artistName
             };
-            const response = await createEvent(acceptedEvent);
-            await deleteEvent(eventId);
-            return response.Item;
+            const response = await updateEvent(event.eventId, acceptedEvent);
+            console.log(response);
+            return response.Attributes;
         } catch (error) {
             console.log(error);
         }

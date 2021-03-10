@@ -1,43 +1,44 @@
 /* eslint react/prop-types: 0 */
-import React, {useState} from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {useState, useEffect} from 'react';
 import { Card, CardMedia, CardContent, CardActions, CardActionArea, Typography, Button} from '@material-ui/core';
 import CreateApplication from '../../Dialogs/CreateApplication/CreateApplication';
 import EventDialog from '../../Dialogs/Event/Event';
-
-const useStyles = makeStyles({
-    root: {
-        maxWidth: 450,
-        marginBottom: 75,
-        marginLeft: 75,
-    },
-    title: {
-      fontSize: 14,
-    },
-    pos: {
-      marginBottom: 0,
-    },
-    media: {
-        height: 170,
-      },
-  });
+import defaultImage from '../../../images/pub.jpg';
 
 function Event({event, createApplication, acceptApplication, user}){
 
-    const classes = useStyles();
-    const { venueName, eventDateTime, eventDescription, venueLocation, eventImage} = event;
+    // const classes = useStyles();
+    const { venueName, eventDateTime, eventDescription, venueLocation} = event;
     const [openApplication, setOpenApplication] = useState(false);
-    const [openManage, setOpenManage] = useState(false)
+    const [openManage, setOpenManage] = useState(false);
+    const [hasApplied, setApplied] = useState(false);
+
+    useEffect(() => {
+        if(event && event.applications){
+            for (var i = 0; i < event.applications.length; i++) {
+                if(user.username === event.applications[i].artistId){
+                    setApplied(true);
+                }
+            }
+        }
+    },[]);
 
     const openApplyForm = () => setOpenApplication(true);
-
     const closeForm = () => setOpenApplication(false);
+
+    const handleCreate = (newApplication, eventId) => {
+        console.log('Application', newApplication);
+        createApplication(newApplication, eventId);
+        setApplied(true);
+        closeForm();
+    }
 
     const renderButtons = (event) => {
         if(!event.artistName){
             return(
                 <React.Fragment>
-                    {user.attributes['custom:user_type'] === 'artist' ? <Button onClick={openApplyForm}>Apply</Button> : null}
+                    {user.attributes['custom:user_type'] === 'artist' && hasApplied === false ? <Button onClick={openApplyForm}>Apply</Button> : null}
+                    {user.attributes['custom:user_type'] === 'artist' && hasApplied === true ? <Button variant="contained" disabled>Applied</Button> : null}
                     {user.attributes['custom:user_type'] === 'venue' ? <Button onClick={openManageDialog}>Manage Applications</Button> : null}
                 </React.Fragment>
             )
@@ -45,23 +46,23 @@ function Event({event, createApplication, acceptApplication, user}){
     }
 
     const openManageDialog = () => setOpenManage(true);
-
     const closeManage = () => setOpenManage(false);
+
     return(
         <React.Fragment>
-        <Card className={classes.root} variant="outlined">
-            <CardActionArea>
-                <CardMedia
-                className={classes.media}
-                image={eventImage ? eventImage : "https://www.hopkinsmedicine.org/-/media/feature/noimageavailable.ashx"}
+        <Card variant="outlined">
+        <CardMedia
+                component="img"
+                image={defaultImage}
                 title="venue"
-                />
+                />    
             <CardContent>
-                <Typography className={classes.title}>Venue: {venueName}</Typography>
-                <Typography className={classes.title}>Location: {venueLocation}</Typography>
-                {eventDescription ? <Typography component="p">Description: <br/>{eventDescription}</Typography> : <Typography className={classes.title}>Artist: {event.artistName}</Typography>}
-                <Typography className={classes.pos}>Date & Time: {eventDateTime}</Typography>
+                <Typography>Venue: {venueName}</Typography>
+                <Typography>Location: {venueLocation}</Typography>
+                {eventDescription ? <Typography component="p">Description: <br/>{eventDescription}</Typography> : <Typography>Artist: {event.artistName}</Typography>}
+                <Typography>Date & Time: {eventDateTime}</Typography>
             </CardContent>
+            <CardActionArea>
             <CardActions>
                 {renderButtons(event)}
                 </CardActions>
@@ -71,7 +72,7 @@ function Event({event, createApplication, acceptApplication, user}){
         <CreateApplication
         open={openApplication}
         event={event}
-        onSubmit={createApplication}
+        onSubmit={handleCreate}
         handleClose={closeForm}
         user={user}
         />

@@ -2,15 +2,18 @@ import React from 'react';
 import { storiesOf } from '@storybook/react';
 import { withKnobs } from '@storybook/addon-knobs';
 
-import Application from './Application'
+import ApplicationDialog from './Application';
 
 
 export const props = {
-    acceptApplication: () => {
+    open: true,
+    handleClose: () => { },
+    onSubmit: (values) => {
         setTimeout(() => {
-            alert("Accepted Application");
+            alert(JSON.stringify(values, null, 2));
         }, 400);
     },
+    isFullScreen: true,
     application: {
         artistName: "Joan Jett",
         applicationHook: "Hi I'm the lead singer of the band Joan Jett and the Blackhearts. I feel that my band would be perfect for you're event.",
@@ -18,9 +21,9 @@ export const props = {
     }
 };
 
-storiesOf('Cards/Application', module)
+storiesOf('Dialogs/Application', module)
     .addDecorator(withKnobs)
     .add('Default', () => (
-        <Application {...props} />
+        <ApplicationDialog {...props} />
     ));
 

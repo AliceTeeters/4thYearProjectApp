@@ -16,6 +16,7 @@ function CreateApplication({
     const [applicationHook, setHook ] = useState(""); 
     const {eventId, venueName, eventDateTime} = event;
     const {name} = user.attributes;
+    const image = user.attributes['custom:user_image'];
 
     const resetApplication = () => {
         setHook("");
@@ -24,10 +25,12 @@ function CreateApplication({
     const handleSubmit = () => {
         const newApplication = {
             artistName: name,
+            artistImage: image,
             applicationHook
         };
         onSubmit(newApplication, eventId);
         resetApplication();
+        handleClose();
     };
 
     return(
